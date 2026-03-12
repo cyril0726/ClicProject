@@ -1,0 +1,10 @@
+#cookie {
+  font-size: 24px;
+  padding: 20px;
+  cursor: pointer;
+}
+
+#score {
+  font-size: 32px;
+  margin-top: 20px;
+}
