@@ -1,14 +1,96 @@
-#auto-increment {
-  font-size: 16px;
-  padding: 10px;
-  margin-top: 10px;
-  cursor: pointer;
-  background-color: #ff6b6b; /* Rouge par défaut (désactivé) */
-  color: white;
-  border: none;
-  border-radius: 5px;
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
 }
 
-#auto-increment:hover {
-  opacity: 0.9;
+#game-container {
+  width: 90%;
+  max-width: 500px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+#score-section {
+  margin-bottom: 20px;
+}
+
+#score-display {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+#stock-section {
+  margin-bottom: 20px;
+}
+
+#stock-section h2 {
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.product {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.product h3 {
+  margin-top: 0;
+}
+
+.product-actions {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.product-actions button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.buy {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.sell {
+  background-color: #f44336;
+  color: white;
+}
+
+#buttons-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+#buttons-section button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#reset {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+#auto-increment {
+  background-color: #ff6b6b;
+  color: white;
 }
