@@ -51,11 +51,21 @@ body {
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
-  box-sizing: border-box; /* Important pour le flex */
+  box-sizing: border-box;
 }
 
 .product h3 {
   margin-top: 0;
+}
+
+.product-info {
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+.product-price, .product-stock {
+  display: block;
+  margin: 5px 0;
 }
 
 .product-actions {
@@ -69,6 +79,12 @@ body {
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.product-value {
+  font-weight: bold;
+  font-size: 18px;
+  margin: 0 10px;
 }
 
 .buy {
@@ -108,17 +124,31 @@ body {
   margin-top: 15px;
 }
 
-#click-salope {
-  width: 100%;
-  padding: 12px;
-  background-color: #9C27B0; /* Violet pour se démarquer */
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
+#score-buttons-section {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
 }
 
-#click-salope:hover {
-  background-color: #7B1FA2; /* Violet plus foncé au survol */
+#score-buttons-section button {
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#add-10 {
+  background-color: #2196F3;
+  color: white;
+}
+
+#add-100 {
+  background-color: #4CAF50;
+  color: white;
+}
+
+#add-1000 {
+  background-color: #FF9800;
+  color: white;
 }

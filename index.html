@@ -17,51 +17,52 @@
       <div class="products-row">
         <div class="product">
           <h3>Drogue</h3>
-          <div class="product-actions">
-            <button class="buy">Acheter</button>
-            <button class="sell">Vendre</button>
+          <div class="product-info">
+            <span class="product-price" id="drug-price">Prix: <span>10</span> €</span>
+            <span class="product-stock">Stock: <span id="drug-stock">0</span></span>
           </div>
-        </div>
-        <div class="product">
-          <h3>Alcool</h3>
           <div class="product-actions">
-            <button class="buy">Acheter</button>
-            <button class="sell">Vendre</button>
+            <button class="buy" data-product="drug">Acheter</button>
+            <span class="product-value" id="drug-value">1</span>
+            <button class="sell" data-product="drug">Vendre</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Section Équipe -->
-    <div id="team-section">
+    <!-- Section Équipe (masquée au début) -->
+    <div id="team-section" style="display: none;">
       <h2>Équipe :</h2>
       <div class="products-row">
         <div class="product">
           <h3>Dealer</h3>
-          <div class="product-actions">
-            <button class="buy">Acheter</button>
-            <button class="sell">Vendre</button>
+          <div class="product-info">
+            <span class="product-price" id="dealer-price">Prix: <span>500</span> €</span>
+            <span class="product-stock">Possédés: <span id="dealer-stock">0</span></span>
+			<div class="dealer-settings" style="margin-top: 10px;">
+			  <label for="dealer-sell-price">Prix de vente :</label>
+			  <input type="number" id="dealer-sell-price" value="10" min="1" style="width: 50px; text-align: center;">
+			  <br>
+			  <label for="dealer-buy-price">Prix d'achat :</label>
+			  <input type="number" id="dealer-buy-price" value="5" min="1" style="width: 50px; text-align: center; margin-top: 5px;">
+			</div>
           </div>
-        </div>
-        <div class="product">
-          <h3>Mac</h3>
           <div class="product-actions">
-            <button class="buy">Acheter</button>
-            <button class="sell">Vendre</button>
+            <button class="buy" data-product="dealer">Acheter</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Section Boutons -->
-    <div id="buttons-section">
-      <button id="reset">Réinitialiser</button>
-      <button id="auto-increment">Auto incr : 1/s</button>
-    </div>
-    <div id="extra-button-section">
-      <button id="click-salope">Clic salope !</button>
-    </div>
-  </div>
+	<!-- Section Boutons (masqués par défaut) -->
+	<div id="buttons-section" style="display: none;">
+	  <button id="reset">Réinitialiser</button>
+	</div>
+	<div id="score-buttons-section" style="display: none;">
+	  <button id="add-10">+10</button>
+	  <button id="add-100">+100</button>
+	  <button id="add-1000">+1000</button>
+	</div>
   <script src="script.js"></script>
 </body>
 </html>
