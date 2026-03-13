@@ -28,21 +28,30 @@ body {
   font-weight: bold;
 }
 
-#stock-section {
+#stock-section, #team-section {
   margin-bottom: 20px;
 }
 
-#stock-section h2 {
+#stock-section h2, #team-section h2 {
   font-size: 22px;
   margin-bottom: 10px;
 }
 
+/* Conteneur pour les produits côte à côte */
+.products-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
 .product {
+  flex: 1;
   background-color: #f9f9f9;
   border: 1px solid #ddd;
   border-radius: 5px;
   padding: 10px;
-  margin-bottom: 10px;
+  box-sizing: border-box; /* Important pour le flex */
 }
 
 .product h3 {
@@ -93,4 +102,23 @@ body {
 #auto-increment {
   background-color: #ff6b6b;
   color: white;
+}
+
+#extra-button-section {
+  margin-top: 15px;
+}
+
+#click-salope {
+  width: 100%;
+  padding: 12px;
+  background-color: #9C27B0; /* Violet pour se démarquer */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+#click-salope:hover {
+  background-color: #7B1FA2; /* Violet plus foncé au survol */
 }
