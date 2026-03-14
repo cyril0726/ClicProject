@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ClicProject</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -38,13 +40,13 @@
           <div class="product-info">
             <span class="product-price" id="dealer-price">Prix: <span>500</span> €</span>
             <span class="product-stock">Possédés: <span id="dealer-stock">0</span></span>
-			<div class="dealer-settings" style="margin-top: 10px;">
-			  <label for="dealer-sell-price">Prix de vente :</label>
-			  <input type="number" id="dealer-sell-price" value="10" min="1" style="width: 50px; text-align: center;">
-			  <br>
-			  <label for="dealer-buy-price">Prix d'achat :</label>
-			  <input type="number" id="dealer-buy-price" value="5" min="1" style="width: 50px; text-align: center; margin-top: 5px;">
-			</div>
+            <div class="dealer-settings">
+              <label for="dealer-sell-price">Prix de vente :</label>
+              <input type="number" id="dealer-sell-price" value="10" min="1">
+              <br>
+              <label for="dealer-buy-price">Prix d'achat :</label>
+              <input type="number" id="dealer-buy-price" value="5" min="1">
+            </div>
           </div>
           <div class="product-actions">
             <button class="buy" data-product="dealer">Acheter</button>
@@ -53,15 +55,30 @@
       </div>
     </div>
 
-	<!-- Section Boutons (masqués par défaut) -->
-	<div id="buttons-section" style="display: none;">
-	  <button id="reset">Réinitialiser</button>
-	</div>
-	<div id="score-buttons-section" style="display: none;">
-	  <button id="add-10">+10</button>
-	  <button id="add-100">+100</button>
-	  <button id="add-1000">+1000</button>
-	</div>
+    <!-- Section Boutons (masqués par défaut) -->
+    <div id="buttons-section" style="display: none;">
+      <button id="reset">Réinitialiser</button>
+    </div>
+    <div id="score-buttons-section" style="display: none;">
+      <button id="add-10">+10</button>
+      <button id="add-100">+100</button>
+      <button id="add-1000">+1000</button>
+    </div>
+  </div>
+
+  <!-- Éléments pour la police -->
+  <div id="police-alert" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1000; cursor: pointer;">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/Police_france_logo.svg/1200px-Police_france_logo.svg.png" alt="Police" style="width: 150px; height: auto;">
+    <p style="text-align: center; color: red; font-weight: bold;">CLIQUEZ VITE !</p>
+  </div>
+
+  <!-- Modale patch note -->
+  <div id="update-modal" class="modal">
+    <strong>Nouveautés :</strong>
+    <p id="update-modal-text"> 14/03 : La police est là !</p>
+    <button id="close-modal" class="close-modal">✕</button>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>

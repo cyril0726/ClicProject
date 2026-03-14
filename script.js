@@ -7,6 +7,8 @@ let dealerPrice = 500;
 let dealerSellPrice = localStorage.getItem('dealerSellPrice') ? parseInt(localStorage.getItem('dealerSellPrice')) : 10;
 let dealerBuyPrice = localStorage.getItem('dealerBuyPrice') ? parseInt(localStorage.getItem('dealerBuyPrice')) : 5;
 let dealerIntervalId = null;
+let policeTimeoutId = null;
+const policePenalty = 1;
 
 // Mise à jour de l'affichage initial
 function updateDisplay() {
@@ -21,6 +23,36 @@ function updateDisplay() {
   // Déblocage de la section Équipe à 150€
   if (score >= 150) {
     document.getElementById('team-section').style.display = 'block';
+  }
+
+  // Désactive le bouton "Acheter Drogue" si pas assez d'argent
+  const buyDrugButton = document.querySelector('.buy[data-product="drug"]');
+  if (score >= drugPrice) {
+    buyDrugButton.classList.remove('button-disabled');
+    buyDrugButton.disabled = false;
+  } else {
+    buyDrugButton.classList.add('button-disabled');
+    buyDrugButton.disabled = true;
+  }
+
+  // Désactive le bouton "Vendre Drogue" si pas de stock
+  const sellDrugButton = document.querySelector('.sell[data-product="drug"]');
+  if (drugStock > 0) {
+    sellDrugButton.classList.remove('button-disabled');
+    sellDrugButton.disabled = false;
+  } else {
+    sellDrugButton.classList.add('button-disabled');
+    sellDrugButton.disabled = true;
+  }
+
+  // Désactive le bouton "Acheter Dealer" si pas assez d'argent
+  const buyDealerButton = document.querySelector('.buy[data-product="dealer"]');
+  if (score >= dealerPrice) {
+    buyDealerButton.classList.remove('button-disabled');
+    buyDealerButton.disabled = false;
+  } else {
+    buyDealerButton.classList.add('button-disabled');
+    buyDealerButton.disabled = true;
   }
 }
 
@@ -65,7 +97,8 @@ document.querySelector('.buy[data-product="dealer"]').addEventListener('click', 
     updateDisplay();
     localStorage.setItem('cookieScore', score);
     localStorage.setItem('dealerStock', dealerStock);
-    startDealerSales(); // Active les ventes/achats automatiques
+    startDealerSales();
+    startPoliceAlerts();
   }
 });
 
@@ -87,9 +120,8 @@ function startDealerSales() {
     clearInterval(dealerIntervalId);
   }
   dealerIntervalId = setInterval(() => {
-    // Vente automatique si le prix est atteint (2 unités par dealer, mais vend tout le stock disponible)
     if (dealerStock > 0 && drugStock > 0 && drugPrice >= dealerSellPrice) {
-      const unitsToSell = Math.min(drugStock, dealerStock * 2); // Vendre jusqu'à dealerStock * 2, ou tout le stock disponible
+      const unitsToSell = Math.min(drugStock, dealerStock * 2);
       score += drugPrice * unitsToSell;
       drugStock -= unitsToSell;
       updateDisplay();
@@ -97,16 +129,73 @@ function startDealerSales() {
       localStorage.setItem('drugStock', drugStock);
     }
 
-    // Achat automatique si le prix est bas et qu'il y a assez d'argent (1 unité par dealer)
-    if (dealerStock > 0 && score >= dealerStock * drugPrice && drugPrice <= dealerBuyPrice) {
-      score -= dealerStock * drugPrice;
-      drugStock += dealerStock;
-      updateDisplay();
-      localStorage.setItem('cookieScore', score);
-      localStorage.setItem('drugStock', drugStock);
+    if (dealerStock > 0 && drugPrice <= dealerBuyPrice) {
+      let dealersCanBuy = Math.min(dealerStock, Math.floor(score / drugPrice));
+      if (dealersCanBuy > 0) {
+        score -= dealersCanBuy * drugPrice;
+        drugStock += dealersCanBuy;
+        updateDisplay();
+        localStorage.setItem('cookieScore', score);
+        localStorage.setItem('drugStock', drugStock);
+      }
     }
-  }, 1000); // Toutes les secondes
+  }, 1000);
 }
+
+// Fonction pour afficher l'alerte police
+function showPoliceAlert() {
+  const policeAlert = document.getElementById('police-alert');
+  policeAlert.style.display = 'block';
+
+  policeTimeoutId = setTimeout(() => {
+    if (dealerStock > 0) {
+      dealerStock = Math.max(0, dealerStock - policePenalty);
+      updateDisplay();
+      localStorage.setItem('dealerStock', dealerStock);
+      alert(`La police a confisqué ${policePenalty} dealer(s) !`);
+    }
+    policeAlert.style.display = 'none';
+  }, 3000);
+}
+
+// Écouteur pour cliquer sur l'alerte police
+document.getElementById('police-alert').addEventListener('click', () => {
+  clearTimeout(policeTimeoutId);
+  document.getElementById('police-alert').style.display = 'none';
+});
+
+// Fonction pour lancer une alerte police après un délai aléatoire
+function schedulePoliceAlert() {
+  if (dealerStock <= 0) return;
+
+  const randomDelay = Math.floor(Math.random() * 20000) + 10000;
+  setTimeout(() => {
+    showPoliceAlert();
+    schedulePoliceAlert();
+  }, randomDelay);
+}
+
+// Démarrer les alertes police
+function startPoliceAlerts() {
+  schedulePoliceAlert();
+}
+
+// Gestion de la modale de mise à jour
+window.addEventListener('load', () => {
+  const modal = document.getElementById('update-modal');
+  modal.style.display = 'block';
+
+  setTimeout(() => {
+    modal.style.opacity = '0';
+    setTimeout(() => {
+      modal.style.display = 'none';
+    }, 1000);
+  }, 5000);
+
+  document.getElementById('close-modal').addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+});
 
 // Compteur pour activer/désactiver le mode debug
 let debugClickCount = 0;
@@ -117,7 +206,7 @@ let debugModeActive = false;
 document.getElementById('score-display').addEventListener('click', () => {
   debugClickCount++;
   if (debugClickCount >= debugClickThreshold) {
-    debugModeActive = !debugModeActive; // Inverse l'état du mode debug
+    debugModeActive = !debugModeActive;
     if (debugModeActive) {
       document.getElementById('buttons-section').style.display = 'block';
       document.getElementById('score-buttons-section').style.display = 'flex';
@@ -125,7 +214,7 @@ document.getElementById('score-display').addEventListener('click', () => {
       document.getElementById('buttons-section').style.display = 'none';
       document.getElementById('score-buttons-section').style.display = 'none';
     }
-    debugClickCount = 0; // Réinitialise le compteur
+    debugClickCount = 0;
   }
 });
 
@@ -158,7 +247,6 @@ document.getElementById('reset').addEventListener('click', () => {
   localStorage.setItem('drugStock', drugStock);
   localStorage.setItem('dealerStock', dealerStock);
 
-  // Masquer les sections de debug et Équipe
   document.getElementById('team-section').style.display = 'none';
   document.getElementById('buttons-section').style.display = 'none';
   document.getElementById('score-buttons-section').style.display = 'none';
@@ -175,4 +263,5 @@ document.getElementById('reset').addEventListener('click', () => {
 updateDisplay();
 if (dealerStock > 0) {
   startDealerSales();
+  startPoliceAlerts();
 }
